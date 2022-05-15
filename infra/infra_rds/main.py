@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # dont forget these manual steps for now: https://docs.meroxa.com/platform/resources/mysql/amazon-rds/#configure-security-groups
+# also in console you need to pubically accessable = y
 import os
 
 from constructs import Construct
