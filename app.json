@@ -1,0 +1,7 @@
+{
+    "name": "meroxa_first_app",
+    "language": "python",
+    "resources": {
+        "source_name": "fixtures/demo-cdc.json"
+    }
+}
