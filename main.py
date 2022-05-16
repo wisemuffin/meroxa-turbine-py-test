@@ -58,7 +58,7 @@ class App:
             # with the `resources` function.
             # Replace `source_name` with the resource name the
             # data store was configured with on the Meroxa platform.
-            source = await turbine.resources("source_name")
+            source = await turbine.resources("test_mysql_rds")
 
             # Specify which upstream records to pull
             # with the `records` function.
@@ -66,7 +66,7 @@ class App:
             # or bucket name in your data store.
             # If you need additional connector configurations, replace '{}'
             # with the key and value, i.e. {"incrementing.field.name": "id"}
-            records = await source.records("collection_name", {})
+            records = await source.records("tasks", {})
             
 
             # Specify which secrets in environment variables should be passed
@@ -83,7 +83,7 @@ class App:
             # with the `resources` function.
             # Replace `destination_name` with the resource name the
             # data store was configured with on the Meroxa platform.
-            destination_db = await turbine.resources("destination_name")
+            destination_db = await turbine.resources("snowflake")
 
             # Specify where to write records downstream
             # using the `write` function.
@@ -91,6 +91,6 @@ class App:
             # or bucket name in your data store.
             # If you need additional connector configurations, replace '{}'
             # with the key and value, i.e. {"behavior.on.null.values": "ignore"}
-            await destination_db.write(passedthrough, "collection_name", {})
+            await destination_db.write(passedthrough, "tasks", {})
         except Exception as e:
             print(e, file=sys.stderr)
