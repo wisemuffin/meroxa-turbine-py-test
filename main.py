@@ -16,34 +16,34 @@ def passthrough(records: t.List[Record]) -> t.List[Record]:
         updated.append(record)
     return updated
 
-def anonymize(records: t.List[Record]) -> t.List[Record]:
-    updated = []
-    logging.info(f"processing {len(records)} record(s)")
-    for record in records:
-        logging.info(f"input: {record}")
-        try:
-            record_value_from_json = json.loads(record.value)
-            hashed_email = hashlib.sha256(
-                record_value_from_json["payload"]["customer_email"].encode("utf-8")
-            ).hexdigest()
-            record_value_from_json["payload"]["customer_email"] = hashed_email
-            new_record = Record(
-                key=record.key,
-                value=record_value_from_json,
-                timestamp=record.timestamp,
-            )
-            logging.info(f"output: {new_record}")
-            updated.append(new_record)
-        except Exception as e:
-            print("Error occurred while parsing records: " + str(e))
-            new_record = Record(
-                key=record.key,
-                value=record_value_from_json,
-                timestamp=record.timestamp,
-            )
-            updated.append(new_record)
-            logging.info(f"output: {new_record}")
-    return updated
+# def anonymize(records: t.List[Record]) -> t.List[Record]:
+#     updated = []
+#     logging.info(f"processing {len(records)} record(s)")
+#     for record in records:
+#         logging.info(f"input: {record}")
+#         try:
+#             record_value_from_json = json.loads(record.value)
+#             hashed_email = hashlib.sha256(
+#                 record_value_from_json["payload"]["customer_email"].encode("utf-8")
+#             ).hexdigest()
+#             record_value_from_json["payload"]["customer_email"] = hashed_email
+#             new_record = Record(
+#                 key=record.key,
+#                 value=record_value_from_json,
+#                 timestamp=record.timestamp,
+#             )
+#             logging.info(f"output: {new_record}")
+#             updated.append(new_record)
+#         except Exception as e:
+#             print("Error occurred while parsing records: " + str(e))
+#             new_record = Record(
+#                 key=record.key,
+#                 value=record_value_from_json,
+#                 timestamp=record.timestamp,
+#             )
+#             updated.append(new_record)
+#             logging.info(f"output: {new_record}")
+#     return updated
 
 
 class App:
@@ -58,7 +58,7 @@ class App:
             # with the `resources` function.
             # Replace `source_name` with the resource name the
             # data store was configured with on the Meroxa platform.
-            source = await turbine.resources("test_mysql_rds")
+            source = await turbine.resources("source_name")
 
             # Specify which upstream records to pull
             # with the `records` function.
@@ -66,7 +66,8 @@ class App:
             # or bucket name in your data store.
             # If you need additional connector configurations, replace '{}'
             # with the key and value, i.e. {"incrementing.field.name": "id"}
-            records = await source.records("tasks", {})
+            records = await source.records("collection_name", {})
+            
 
             # Specify which secrets in environment variables should be passed
             # into the Process.
@@ -82,7 +83,7 @@ class App:
             # with the `resources` function.
             # Replace `destination_name` with the resource name the
             # data store was configured with on the Meroxa platform.
-            destination_db = await turbine.resources("snowflake")
+            destination_db = await turbine.resources("destination_name")
 
             # Specify where to write records downstream
             # using the `write` function.
@@ -90,6 +91,6 @@ class App:
             # or bucket name in your data store.
             # If you need additional connector configurations, replace '{}'
             # with the key and value, i.e. {"behavior.on.null.values": "ignore"}
-            await destination_db.write(passedthrough, "tasks", {})
+            await destination_db.write(passedthrough, "collection_name", {})
         except Exception as e:
             print(e, file=sys.stderr)
