@@ -83,7 +83,7 @@ class App:
             # with the `resources` function.
             # Replace `destination_name` with the resource name the
             # data store was configured with on the Meroxa platform.
-            destination_db = await turbine.resources("snowflake")
+            destination_db = await turbine.resources("snowflake_wisemuffin")
 
             # Specify where to write records downstream
             # using the `write` function.
