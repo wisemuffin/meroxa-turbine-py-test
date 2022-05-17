@@ -1,5 +1,8 @@
 {
     "name": "meroxa_first_app",
     "language": "python",
-    "resources": {}
+    "resources": {
+        "test_mysql_rds": "fixtures/demo-cdc.json",
+        "snowflake": ""
+    }
 }
