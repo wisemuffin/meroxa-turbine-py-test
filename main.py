@@ -58,7 +58,7 @@ class App:
             # with the `resources` function.
             # Replace `source_name` with the resource name the
             # data store was configured with on the Meroxa platform.
-            source = await turbine.resources("mysqldb")
+            source = await turbine.resources("test_mysql_rds")
 
             # Specify which upstream records to pull
             # with the `records` function.
