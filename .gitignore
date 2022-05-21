@@ -1,13 +1,1 @@
-/build
-/src/*.egg-info
-
-__pycache__
-
-.DS_Store
-
-*.tfstate*
-.terraform*
-
 cdktf.out
-
-meroxa_create_resources.sh
