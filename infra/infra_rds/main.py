@@ -51,7 +51,10 @@ class MyStack(TerraformStack):
             password             = dev_password,
             parameter_group_name = param_group.name,
             # security_group_names=[security_group.name],
-            skip_final_snapshot  = True
+            skip_final_snapshot  = True,
+            backup_retention_period=1,
+            backup_window="03:10-3:30"
+            
             )
 
         TerraformOutput(self, "instance name",
