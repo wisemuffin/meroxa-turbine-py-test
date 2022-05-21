@@ -1,5 +1,5 @@
 {
-    "name": "meroxa_first_app",
+    "name": "meroxa-first-app",
     "language": "python",
     "resources": {
         "test_mysql_rds": "fixtures/demo-cdc.json",
