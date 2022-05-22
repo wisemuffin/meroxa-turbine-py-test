@@ -1,8 +1,7 @@
 {
-    "name": "meroxa-first-app",
+    "name": "meroxa-second-app",
     "language": "python",
     "resources": {
-        "test_mysql_rds": "fixtures/demo-cdc.json",
-        "snowflake": ""
+        "test_mysql_rds": "fixtures/mysql_tasks.json"
     }
 }

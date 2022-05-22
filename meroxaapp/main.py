@@ -13,37 +13,54 @@ def passthrough(records: t.List[Record]) -> t.List[Record]:
     logging.info(f"processing {len(records)} record(s)")
     for record in records:
         logging.info(f"input: {record}")
-        updated.append(record)
+        try:
+            record_value_from_json = json.loads(record.value)
+            new_record = Record(
+                key=record.key,
+                value=record_value_from_json,
+                timestamp=record.timestamp,
+            )
+            logging.info(f"output: {new_record}")
+            updated.append(new_record)
+        except Exception as e:
+            print("Error occurred while parsing records: " + str(e))
+            new_record = Record(
+                key=record.key,
+                value=record_value_from_json,
+                timestamp=record.timestamp,
+            )
+            updated.append(new_record)
+            logging.info(f"output: {new_record}")
     return updated
 
-# def anonymize(records: t.List[Record]) -> t.List[Record]:
-#     updated = []
-#     logging.info(f"processing {len(records)} record(s)")
-#     for record in records:
-#         logging.info(f"input: {record}")
-#         try:
-#             record_value_from_json = json.loads(record.value)
-#             hashed_email = hashlib.sha256(
-#                 record_value_from_json["payload"]["customer_email"].encode("utf-8")
-#             ).hexdigest()
-#             record_value_from_json["payload"]["customer_email"] = hashed_email
-#             new_record = Record(
-#                 key=record.key,
-#                 value=record_value_from_json,
-#                 timestamp=record.timestamp,
-#             )
-#             logging.info(f"output: {new_record}")
-#             updated.append(new_record)
-#         except Exception as e:
-#             print("Error occurred while parsing records: " + str(e))
-#             new_record = Record(
-#                 key=record.key,
-#                 value=record_value_from_json,
-#                 timestamp=record.timestamp,
-#             )
-#             updated.append(new_record)
-#             logging.info(f"output: {new_record}")
-#     return updated
+def anonymize(records: t.List[Record]) -> t.List[Record]:
+    updated = []
+    logging.info(f"processing {len(records)} record(s)")
+    for record in records:
+        logging.info(f"input: {record}")
+        try:
+            record_value_from_json = json.loads(record.value)
+            hashed_email = hashlib.sha256(
+                record_value_from_json["payload"]["customer_email"].encode("utf-8")
+            ).hexdigest()
+            record_value_from_json["payload"]["customer_email"] = hashed_email
+            new_record = Record(
+                key=record.key,
+                value=record_value_from_json,
+                timestamp=record.timestamp,
+            )
+            logging.info(f"output: {new_record}")
+            updated.append(new_record)
+        except Exception as e:
+            print("Error occurred while parsing records: " + str(e))
+            new_record = Record(
+                key=record.key,
+                value=record_value_from_json,
+                timestamp=record.timestamp,
+            )
+            updated.append(new_record)
+            logging.info(f"output: {new_record}")
+    return updated
 
 
 class App:
@@ -77,7 +94,7 @@ class App:
             # Specify what code to execute against upstream records
             # with the `process` function.
             # Replace `anonymize` with the name of your function code.
-            # passedthrough = await turbine.process(records, passthrough)
+            passedthrough = await turbine.process(records, anonymize)
 
             # Identify a downstream data store for your data app
             # with the `resources` function.
@@ -91,6 +108,6 @@ class App:
             # or bucket name in your data store.
             # If you need additional connector configurations, replace '{}'
             # with the key and value, i.e. {"behavior.on.null.values": "ignore"}
-            await destination_db.write(records, "tasks", {})
+            await destination_db.write(passedthrough, "tasks2", {})
         except Exception as e:
             print(e, file=sys.stderr)

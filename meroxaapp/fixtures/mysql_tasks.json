@@ -1,0 +1,72 @@
+{
+    "tasks": [
+        {
+            "key": "1",
+            "value": {
+                "schema": {
+                    "type": "struct",
+                    "fields": [
+                        {
+                            "type": "struct",
+                            "fields": [
+                                {
+                                    "type": "int32",
+                                    "optional": false,
+                                    "field": "task_id"
+                                },
+                                {
+                                    "type": "string",
+                                    "optional": false,
+                                    "field": "title"
+                                },
+                                {
+                                    "type": "string",
+                                    "optional": true,
+                                    "field": "description"
+                                },
+                                {
+                                    "type": "string",
+                                    "optional": true,
+                                    "field": "customer_email"
+                                }
+                            ],
+                            "optional": true,
+                            "name": "resource.database.tasks.Value",
+                            "field": "before"
+                        }
+                    ],
+                    "optional": false,
+                    "name": "resource.database.tasks.Envelope"
+                },
+                "payload": {
+                    "before": null,
+                    "after": {
+                        "task_id": 1,
+                        "title": "My first task",
+                        "description": "sleeping-bag",
+                        "customer_email": "dave@faker.com"
+                    },
+                    "source": {
+                        "version": "1.2.5.Final",
+                        "connector": "mysql",
+                        "name": "resource",
+                        "ts_ms": 0,
+                        "snapshot": "true",
+                        "db": "database",
+                        "table": "orders",
+                        "server_id": 0,
+                        "gtid": null,
+                        "file": "binlog.006733",
+                        "pos": 196,
+                        "row": 0,
+                        "thread": null,
+                        "query": null
+                    },
+                    "op": "c",
+                    "ts_ms": 1650418270290,
+                    "transaction": null
+                }
+            }
+        }
+    ]
+}

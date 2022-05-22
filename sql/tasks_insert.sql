@@ -4,8 +4,8 @@ VALUES('Learn MySQL INSERT Statement',1);
 INSERT INTO tasks(title,start_date,due_date)
 VALUES('Use current date for the task',CURRENT_DATE(),CURRENT_DATE());
 
-INSERT INTO tasks(title, priority, start_date, due_date)
+INSERT INTO tasks(title, priority, start_date, due_date, customer_email)
 VALUES
-	('My first task', 1, CURRENT_DATE(), CURRENT_DATE()),
-	('It is the second task',2, CURRENT_DATE(), CURRENT_DATE()),
-	('This is the third task of the week',3, CURRENT_DATE(), CURRENT_DATE());
+	('15th task', 1, CURRENT_DATE(), CURRENT_DATE(), 'dave@fake.com'),
+	('16th task', 1, CURRENT_DATE(), CURRENT_DATE(), 'emma@fake.com'), 
+	('17th task', 1, CURRENT_DATE(), CURRENT_DATE(), 'whoop@fake.com');
