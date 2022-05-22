@@ -9,32 +9,34 @@ from turbine.runtime import Record, Runtime
 logging.basicConfig(level=logging.INFO)
 
 def passthrough(records: t.List[Record]) -> t.List[Record]:
+    """not working"""
     updated = []
-    logging.info(f"processing {len(records)} record(s)")
-    logging.info(f"processing {records} record(s)")
-    # for record in records:
-    #     logging.info(f"input: {record}")
-    #     try:
-    #         record_value_from_json = json.loads(record.value)
-    #         new_record = Record(
-    #             key=record.key,
-    #             value=record_value_from_json,
-    #             timestamp=record.timestamp,
-    #         )
-    #         logging.info(f"output: {new_record}")
-    #         updated.append(new_record)
-    #     except Exception as e:
-    #         print("Error occurred while parsing records: " + str(e))
-    #         new_record = Record(
-    #             key=record.key,
-    #             value='',
-    #             timestamp=record.timestamp,
-    #         )
-    #         updated.append(new_record)
-    #         logging.info(f"output: {new_record}")
-    # return updated
+    # logging.info(f"processing {len(records)} record(s)")
+    # logging.info(f"processing {records} record(s)")
+    for record in records:
+        logging.info(f"input: {record}")
+        try:
+            record_value_from_json = json.loads(record.value)
+            new_record = Record(
+                key=record.key,
+                value=record_value_from_json,
+                timestamp=record.timestamp,
+            )
+            logging.info(f"output: {new_record}")
+            updated.append(new_record)
+        except Exception as e:
+            print("Error occurred while parsing records: " + str(e))
+            new_record = Record(
+                key=record.key,
+                value='',
+                timestamp=record.timestamp,
+            )
+            updated.append(new_record)
+            logging.info(f"output: {new_record}")
+    return updated
 
 def anonymize(records: t.List[Record]) -> t.List[Record]:
+    """not working"""
     updated = []
     logging.info(f"processing {len(records)} record(s)")
     for record in records:
@@ -95,7 +97,7 @@ class App:
             # Specify what code to execute against upstream records
             # with the `process` function.
             # Replace `anonymize` with the name of your function code.
-            passedthrough = await turbine.process(records, passthrough)
+            # passedthrough = await turbine.process(records, passthrough)
 
             # Identify a downstream data store for your data app
             # with the `resources` function.
@@ -109,6 +111,7 @@ class App:
             # or bucket name in your data store.
             # If you need additional connector configurations, replace '{}'
             # with the key and value, i.e. {"behavior.on.null.values": "ignore"}
-            await destination_db.write(passedthrough, "tasks2", {})
+            # await destination_db.write(passedthrough, "tasks", {})
+            await destination_db.write(records, "tasks", {})
         except Exception as e:
             print(e, file=sys.stderr)

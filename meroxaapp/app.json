@@ -1,5 +1,5 @@
 {
-    "name": "meroxa-second-app",
+    "name": "meroxa-mysql-task-app",
     "language": "python",
     "resources": {
         "test_mysql_rds": "fixtures/mysql_tasks.json"
