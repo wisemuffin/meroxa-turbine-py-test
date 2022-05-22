@@ -53,7 +53,7 @@ class MyStack(TerraformStack):
             # security_group_names=[security_group.name],
             skip_final_snapshot  = True,
             backup_retention_period=1,
-            backup_window="03:10-3:30"
+            backup_window="03:30-04:30"
             
             )
 
