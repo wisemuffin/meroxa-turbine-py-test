@@ -12,8 +12,54 @@ CREATE TABLE IF NOT EXISTS tasks (
     PRIMARY KEY (task_id)
 );
 
+/*
+ * Initial Load
+ */
 INSERT INTO tasks(title, priority, start_date, due_date, email, description, update_at)
 VALUES
-	('1th task', 1, CURRENT_DATE(), CURRENT_DATE(), 'dave@fake.com', 'get some food', CURRENT_TIMESTAMP()),
+	('1th task', 1, CURRENT_DATE(), CURRENT_DATE(), 'dave@fake.com', 'get some food oops', CURRENT_TIMESTAMP()),
 	('2th task', 1, CURRENT_DATE(), CURRENT_DATE(), 'emma@fake.com', 'make dinner', CURRENT_TIMESTAMP()), 
-	('3th task', 1, CURRENT_DATE(), CURRENT_DATE(), 'whoop@fake.com', 'clean the house', CURRENT_TIMESTAMP());
+	('3th task', 1, CURRENT_DATE(), CURRENT_DATE(), 'whoop@fake.com', 'clean the house', CURRENT_TIMESTAMP())
+;
+
+/*
+ * example insert
+ */
+INSERT INTO tasks(title, priority, start_date, due_date, email, description, update_at)
+VALUES
+	('4th task', 1, CURRENT_DATE(), CURRENT_DATE(), 'ubuntu@fake.com', 'a new update', CURRENT_TIMESTAMP())
+	;
+
+/*
+ * example delete
+ */
+;
+delete from tasks where task_id = 1
+;
+
+/*
+ * example update
+ */
+
+update tasks
+set description='updated this to eat food', update_at=CURRENT_TIMESTAMP()
+where task_id = 2
+;
+
+/*
+ * check bin logs
+ */
+
+SHOW MASTER STATUS;
+SHOW BINARY LOGS;
+call mysql.rds_set_configuration('binlog retention hours', 24);
+SHOW VARIABLES LIKE 'log_bin';
+SHOW VARIABLES LIKE 'log_bin_basename';
+
+/*
+ * profile data
+ */
+select *
+from tasks
+;
+
