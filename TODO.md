@@ -11,10 +11,13 @@ currently setup in gui
 
 spin up mysql
 ```bash
-cd infra/infra_rds
-pipenv shell
-cdktf deploy
+cd infra/infra_rds;
+pipenv shell;
+cdktf deploy;
 ```
+
+make mysql publicly available.
+
 
 setup meroxa access in snowflake
 run sql/snowflake_setup.sql

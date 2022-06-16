@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS tasks (
     task_id INT AUTO_INCREMENT,
     title VARCHAR(255) NOT NULL,
+    email VARCHAR(512) NOT NULL,
     start_date DATE,
     due_date DATE,
     priority TINYINT NOT NULL DEFAULT 3,
